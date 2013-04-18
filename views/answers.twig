@@ -1,0 +1,22 @@
+{% set active_page = "answers" %}
+{% extends "layout.html" %}
+
+{% block content %}
+
+Answers: {{ answers|length }}
+
+{% for user, answer in answers %}
+    <h3>User {{user}}</h3>
+    <p>Styled questionnaire: {{answer.styled}}</p>
+    {% for question in answer.questions %}
+        <br /><strong>{{question.question}}</strong>
+        <ul>
+        {% for a in question.answers %}
+        <li>{{a}}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+<hr />
+{% endfor %}
+
+{% endblock %}

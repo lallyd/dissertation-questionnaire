@@ -50,6 +50,8 @@ class Question {
 		$q->answers = $this->db->fetchAll("SELECT * FROM possible_answers WHERE question_id=?", array($q->id));
 		if (count($q->answers) == 0){ $q->answers = array(null); }
 
+$q->title = auto_link_text($q->title);
+
 		return $q;
 	}
 

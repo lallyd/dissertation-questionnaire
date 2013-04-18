@@ -11,10 +11,12 @@
     {% set sty = "styled" %}
     {% else %}
     {% set sty = "unstyled" %}
+
     {% endif %}
-    
+{% if qset %}    
     <img class="popup" src="/assets/img/{{sty}}-{{qset}}.png" />
-    <span class="question">{{ question.title }}</span>
+{% endif %}
+    <span class="question">{{ question.title|raw }}</span>
 <div>
     {% for answer in [1,2,3,4,5, "Rather not say"] %}
     <label class="hori" for="q{{question.id}}_{{loop.index}}"><input id="q{{question.id}}_{{loop.index}}" type="radio" name="q{{question.id}}[]" value="{{answer}}" /> {{answer}}</label>
