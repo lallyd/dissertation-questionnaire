@@ -1,0 +1,13 @@
+{
+    "require": {
+	"silex/silex": "1.0.*",
+	"twig/twig": "*",
+	"doctrine/dbal": "*"
+    },
+    "autoload": {
+	"psr-0": {
+	    "Questionnaire": "src"
+	}
+    },
+    "minimum-stability": "dev"
+}

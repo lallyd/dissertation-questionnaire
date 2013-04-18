@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% if question.type == "predefined" %}
+{% set hide_class = "" %}
+{% else %}
+{% set hide_class = "hidden" %}
+{% endif %}
+{% block content %}
+
+<form method="post" action="/admin/question">
+	<fieldset>
+		<legend>Question Admin</legend>
+		<label>Title</label>
+		<input type="text" name="title" value="{{question.title}}">
+
+		<label>Type</label>
+		<label class="radio">
+			<input type="radio" name="type" value="free" class="type" {% if question.type == "free" %}checked{%endif%} /> Free text (small)
+		</label>
+		<label class="radio">
+			<input type="radio" name="type" value="textarea" class="type" {% if question.type == "textarea" %}checked{%endif%} /> Free text (large)
+		</label>
+		<label class="radio">
+			<input type="radio" name="type" value="rate" class="type" {% if question.type == "rate" %}checked{%endif%} /> Rate 1-5
+		</label>
+		<label class="radio">
+			<input type="radio" name="type" value="yesno" class="type" {% if question.type == "yesno" %}checked{%endif%} /> Yes/No
+		</label>
+		<label class="radio">
+			<input type="radio" name="type" value="yesnosimple" class="type" {% if question.type == "yesnosimple" %}checked{%endif%} /> Yes/No (simple)
+		</label>
+		<label class="radio">
+			<input type="radio" name="type" value="predefined" class="type" {% if question.type == "predefined" %}checked{%endif%} /> Predefined
+			<label class="predef checkbox {{hide_class}}">
+				<input type="checkbox" name="allow_multi" {% if question.allow_multi %}checked{%endif%} > Allow multiple answers
+			</label>
+		</label>
+		<div class="predef {{hide_class}}">
+			<label>Possible answers <span class="addmore">[+ Add More]</span></label>
+			<ul class="answers">
+				{% for q in question.answers %}
+				<li><input name="predefined_answers[]" type="text" value="{{q.title}}" /> <span class="del">[x]</span></li>
+				{% endfor %}
+			</ul>
+		</div>
+
+
+		<label>Question group</label>
+		<input type="text" name="section" value="{{question.section}}" />
+
+		{% if question.id %}
+		<input type="hidden" name="id" value="{{question.id}}" />
+		{% endif %}
+
+		<button type="submit" class="btn">Submit</button>
+	</fieldset>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+$(".type").click(function(){
+	if ($(this).val() == "predefined" && $(this).is(":checked")) {
+		$(".predef").show();
+	} else {
+		$(".predef").hide();
+	}
+});
+
+$(".addmore").click(function(){
+	$(".answers").append('<li><input name="predefined_answers[]" type="text" /> <span class="del">[x]</span></li>');
+});
+
+$(".answers").on("click", ".del", function(){
+	$(this).parents("li").remove();
+});
+</script>
+{% endblock %}

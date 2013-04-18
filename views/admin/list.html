@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<a href="/admin/question">[Add Question]</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Section</th>
+            <th>Type</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody id="sortable">
+    {% for question in questions %}
+    <tr data-id="{{question.id}}">
+        <td>{{question.title}}</td>
+        <td>{{question.section}}</td>
+        <td>{{question.type}}</td>
+        <td><a href="/admin/question/{{question.id}}">[Edit]</a>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+$( "#sortable" ).sortable({
+    "update": function(){
+
+        $rows = $("#sortable").children("tr");
+        var mapping = {};
+        $rows.each(function(i,r){
+            mapping[$(r).attr("data-id")] = i;
+        });
+        $.post("/admin/order_questions", { "questions": mapping }, function(){});
+    }
+});
+$( "#sortable" ).disableSelection();
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+<div class="row">
+    <fieldset>
+    {% if question.id == 21 %}
+        {% set qset=1 %}
+    {% endif %}
+    {% if question.id == 22 %}
+        {% set qset=2 %}
+    {% endif %}
+
+    {% if qset == styled_id %}
+    {% set sty = "styled" %}
+    {% else %}
+    {% set sty = "unstyled" %}
+    {% endif %}
+    
+    <img class="popup" src="/assets/img/{{sty}}-{{qset}}.png" />
+    <span class="question">{{ question.title }}</span>
+<div>
+    {% for answer in [1,2,3,4,5, "Rather not say"] %}
+    <label class="hori" for="q{{question.id}}_{{loop.index}}"><input id="q{{question.id}}_{{loop.index}}" type="radio" name="q{{question.id}}[]" value="{{answer}}" /> {{answer}}</label>
+    {% endfor %}
+
+</div>
+</fieldset>
+</div>

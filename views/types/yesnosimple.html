@@ -1,0 +1,8 @@
+<div class="row">
+    <fieldset>
+        <label class="question">{{ question.title }}</label>
+        {% for answer in ['Yes', 'No'] %}
+        <label {%if question.answers|length < 5 %}class="hori"{%endif%} for="q{{question.id}}_{{loop.index}}"><input id="q{{question.id}}_{{loop.index}}" type="radio" name="q{{question.id}}[]" value="{{answer}}" /> {{answer}}</label>
+        {% endfor %}
+    </fieldset>
+</div>

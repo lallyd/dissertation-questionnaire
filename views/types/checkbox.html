@@ -1,0 +1,8 @@
+<div class="row">
+    <fieldset>
+        <span class="question">{{ question.title }}</span>
+        {% for answer in question.answers %}
+        <label for="q{{question.id}}_{{loop.index}}"><input id="q{{question.id}}_{{loop.index}}" type="checkbox" name="q{{question.id}}[]" value="{{answer.title}}" /> {{answer.title}}</label>
+        {% endfor %}
+    </fieldset>
+</div>

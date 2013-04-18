@@ -1,0 +1,5 @@
+{% if question.allow_multi %}
+{% include "types/checkbox.html" %}
+{% else %}
+{% include "types/radio.html" %}
+{% endif %}

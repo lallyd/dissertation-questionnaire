@@ -1,0 +1,90 @@
+{% set active_page = "questionnaire" %}
+
+{% extends back_to_bootstrap ? "layout.html" : "empty.html" %}
+
+{% block content %}
+<style>
+.question {
+	margin: 5px 0;
+	font-weight: bold;
+	display: block;
+}
+</style>
+
+{% if back_to_bootstrap %}
+<style>
+	fieldset {
+		border: 1px solid #DDD;
+		padding: 12px;
+		border-radius: 3px;
+	}
+
+	textarea {
+		width: 350px;
+		height: 80px;
+	}
+</style>
+{% endif %}
+
+{%if styled_page %}
+<link href="/assets/css/foundation.min.css" rel="stylesheet" />
+
+<style>
+fieldset {
+	margin: 10px  auto;
+}
+.hori {
+	display: inline;
+}
+
+.row .row {
+	margin: 0;
+}
+</style>
+
+<div class="top-bar">
+	<ul>
+		<li class="name">
+		<h1>
+			<a href="#">
+				Questionnaire
+			</a>
+		</h1>
+		</li>
+	</ul>
+</div>
+
+{% else %}
+<style> fieldset { margin-top: 10px; }</style>
+{% endif %}
+
+<form action="/questionnaire" method="post">
+	<input type="hidden" name="current_page" value="{{current_section}}" />
+<div class="row">
+<a href="/cancel">&laquo; Cancel taking questionnaire and return to the homepage</a>
+</div>
+
+{% for question in questions %}
+
+{% if loop.index == 4 and question.type == "rate" %}
+<div class="row">
+	<fieldset>
+		<span class="question">On a scale of 1 - 5 (where 1 is very untrustworthy and 5 is very trustworthy) how do you rate the trustworthiness of the following websites?</span>
+		{% endif %}
+
+		{% if loop.index == 8 %}
+	</fieldset>
+</div>
+{% endif %}
+
+
+{% include "types/" ~ question.type ~ ".html" with question %}
+{% endfor %}
+
+<div class="row">
+	<fieldset>
+	<input type="submit" value="Next Page" />
+</fieldset>
+</div>
+</form>
+{% endblock %}
